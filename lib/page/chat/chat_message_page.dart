@@ -12,6 +12,7 @@ import 'package:mohpromt_chat/api/response/message_response.dart';
 import 'package:mohpromt_chat/api/service/chat_service.dart';
 import 'package:mohpromt_chat/appManager/format_time_notification.dart';
 import 'package:mohpromt_chat/appManager/local_storage_manager.dart';
+import 'package:mohpromt_chat/appManager/locale_string.dart';
 import 'package:mohpromt_chat/page/chat/cell/defaultview_message_cell.dart';
 import 'package:mohpromt_chat/page/chat/cell/file_message_cell.dart';
 import 'package:mohpromt_chat/page/chat/cell/image_message_cell.dart';
@@ -267,57 +268,61 @@ class ChatMessagePageState extends State<ChatMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager().backgroundColor,
-      appBar: AppBar(
-        centerTitle: false,
-        titleSpacing: 0.0,
-        title: _cardProfile(),
-        backgroundColor: ColorManager().primaryColor,
-        leading: BackButton(
-          color: ColorManager().secondaryColor,
-          onPressed: () {
-            setState(() {
-              Navigator.pop(context);
-            });
-          },
+    return GetMaterialApp(
+      translations: LocaleString(),
+      locale: const Locale('th', 'TH'),
+      home: Scaffold(
+        backgroundColor: ColorManager().backgroundColor,
+        appBar: AppBar(
+          centerTitle: false,
+          titleSpacing: 0.0,
+          title: _cardProfile(),
+          backgroundColor: ColorManager().primaryColor,
+          leading: BackButton(
+            color: ColorManager().secondaryColor,
+            onPressed: () {
+              setState(() {
+                Navigator.pop(context);
+              });
+            },
+          ),
         ),
-      ),
-      body: SafeArea(
-        left: false,
-        top: false,
-        right: false,
-        bottom: true,
-        child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 400),
-                    child: isLoadData
-                        ? _shimmer(double.infinity)
-                        : GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showMediaIcon = true;
-                                _focusNode.unfocus();
-                              });
-                            },
-                            child: Container(
-                              child: buildListMessage(),
+        body: SafeArea(
+          left: false,
+          top: false,
+          right: false,
+          bottom: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      child: isLoadData
+                          ? _shimmer(double.infinity)
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  showMediaIcon = true;
+                                  _focusNode.unfocus();
+                                });
+                              },
+                              child: Container(
+                                child: buildListMessage(),
+                              ),
                             ),
-                          ),
-                  ),
-                  Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
-                  Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
-                ],
+                    ),
+                    Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
+                    Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
+                  ],
+                ),
               ),
-            ),
-            _quickReplyBar(),
-            _tapbar(),
-            // _menuBar(),
-          ],
+              _quickReplyBar(),
+              _tapbar(),
+              // _menuBar(),
+            ],
+          ),
         ),
       ),
     );
