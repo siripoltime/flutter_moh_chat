@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:mohpromt_chat/appManager/local_storage_manager.dart';
@@ -47,7 +48,7 @@ class ApiManager {
       'Content-Type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("masterTokenChat") ?? ""}'
     };
-    // print(body);
+    // debugPrint(body);
     try {
       http.Response response = await http.post(domainUri, headers: headers, body: jsonEncode(body));
       var responseBody = response.body;
@@ -55,9 +56,9 @@ class ApiManager {
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       } else {
-        print("Error : Status ${response.statusCode} ");
-        print("body : ${body}");
-        print("responseBody : ${responseBody}");
+        debugPrint("Error : Status ${response.statusCode} ");
+        debugPrint("body : ${body}");
+        debugPrint("responseBody : ${responseBody}");
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       }
@@ -80,16 +81,16 @@ class ApiManager {
     try {
       http.Response response = await http.post(domainUri, headers: headers, body: jsonEncode(body));
       var responseBody = response.body;
-      print(domainUri);
-      print(accessToken);
-      print(response.body);
-      print(response.statusCode);
+      debugPrint('domainUri $domainUri');
+      debugPrint('accessToken $accessToken');
+      debugPrint('response.body ${response.body}');
+      debugPrint('response.statusCode ${response.statusCode}');
       if (response.statusCode == 200) {
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       } else {
-        print("Error : Status ${response.statusCode} ");
-        print("responseBody : ${responseBody}");
+        debugPrint("Error : Status ${response.statusCode} ");
+        debugPrint("responseBody : $responseBody");
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       }
@@ -112,17 +113,17 @@ class ApiManager {
     try {
       Uri domainUri = Uri.parse(domain + apiName);
       http.Response response = await http.get(domainUri, headers: header);
-      print(domainUri);
-      print(accessToken);
-      print(response.body);
-      print(response.statusCode);
+      debugPrint('domainUri $domainUri');
+      debugPrint('accessToken $accessToken');
+      debugPrint('response.body ${response.body}');
+      debugPrint('response.statusCode ${response.statusCode}');
       var responseBody = response.body;
       if (response.statusCode == 200) {
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       } else {
-        print("Error : Status ${response.statusCode} ");
-        print("responseBody : ${responseBody}");
+        debugPrint("Error : Status ${response.statusCode} ");
+        debugPrint("responseBody : $responseBody");
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       }
