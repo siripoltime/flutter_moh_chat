@@ -513,7 +513,11 @@ class ChatMessagePageState extends State<ChatMessagePage> {
               keyboardAppearance: Brightness.dark,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: '${"Type Text".tr}...',
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                hintText: "typeText".tr,
                 hintStyle: const TextStyle(
                   fontSize: 16,
                 ),
@@ -566,24 +570,25 @@ class ChatMessagePageState extends State<ChatMessagePage> {
           }
 
           return Column(
-                      children: [
-          Visibility(
-              visible: messageList.length == index + 1,
-              child: loadmore
-                  ? Container(
-                      height: 70,
-                      alignment: Alignment.center,
-                      child: Container(padding: const EdgeInsets.all(16), child: BenefitWidget.baseLoadingAnimation()),
-                    )
-                  : Container(height: 40)),
-          timeToDayCell(index, messageList),
-          Row(
             children: [
-              Expanded(child: viewMessageCell(messageList, messageList[index], isStackMessage, index)),
+              Visibility(
+                  visible: messageList.length == index + 1,
+                  child: loadmore
+                      ? Container(
+                          height: 70,
+                          alignment: Alignment.center,
+                          child:
+                              Container(padding: const EdgeInsets.all(16), child: BenefitWidget.baseLoadingAnimation()),
+                        )
+                      : Container(height: 40)),
+              timeToDayCell(index, messageList),
+              Row(
+                children: [
+                  Expanded(child: viewMessageCell(messageList, messageList[index], isStackMessage, index)),
+                ],
+              )
             ],
-          )
-                      ],
-                    );
+          );
         });
   }
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mohpromt_chat/appManager/view_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mohpromt_chat/page/chat/widget/loadwidget.dart';
 import 'package:shimmer/shimmer.dart';
 
 //BenefitWidget.imageProfile
 //Image.network
 extension BenefitWidget on Widget {
   static Widget baseLoadingAnimation() {
-    return CircularProgressIndicator(
-      color: ColorManager().primaryColor,
-      backgroundColor: ColorManager().backgroundColor,
+    return const LoadWidget(
+      width: 20,
     );
   }
 

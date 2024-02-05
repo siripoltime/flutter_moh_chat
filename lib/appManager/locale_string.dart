@@ -20,10 +20,9 @@ class LocaleString extends Translations {
           'Photo': 'รูป',
           'Agree': 'ตกลง',
           'Edit': 'แก้ไข',
-          'Location': 'ตำแหน่งที่ตั้ง',
           'delete': 'ลบ',
           'Mohpromt': 'หมอพร้อม',
-          'Type Text': 'พิมพ์ข้อความ',
+          'typeText': 'พิมพ์ข้อความ...',
         },
       };
 }

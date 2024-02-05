@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:mohpromt_chat/page/chat/widget/benefit_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -260,8 +261,8 @@ class _WebViewState extends State<WebView> {
                   },
                   onConsoleMessage: (controller, consoleMessage) {}),
           isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: BenefitWidget.baseLoadingAnimation(),
                 )
               : const Stack(),
         ],

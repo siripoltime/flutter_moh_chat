@@ -90,10 +90,7 @@ class DefaulViewMessageCellState extends State<DefaulViewMessageCell> {
                       height: 18,
                       width: 18,
                       margin: const EdgeInsets.only(right: 8, bottom: 8),
-                      child: CircularProgressIndicator(
-                        color: ColorManager().primaryColor,
-                      ),
-                    )
+                      child: BenefitWidget.baseLoadingAnimation())
                   : Container(
                       alignment: Alignment.centerRight,
                       width: MediaQuery.of(context).size.width * 0.2,
