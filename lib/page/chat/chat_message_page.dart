@@ -23,9 +23,9 @@ import 'package:mohpromt_chat/page/chat/menu_action.dart';
 import 'package:mohpromt_chat/page/chat/widget/alert_widget.dart';
 import 'package:mohpromt_chat/page/chat/widget/benefit_widget.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../appManager/view_manager.dart';
 import 'package:centrifuge/centrifuge.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatMessagePage extends StatefulWidget {
