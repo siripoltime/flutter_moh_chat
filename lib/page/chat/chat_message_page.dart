@@ -271,6 +271,7 @@ class ChatMessagePageState extends State<ChatMessagePage> {
     return GetMaterialApp(
       translations: LocaleString(),
       locale: const Locale('th', 'TH'),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: ColorManager().backgroundColor,
         appBar: AppBar(
