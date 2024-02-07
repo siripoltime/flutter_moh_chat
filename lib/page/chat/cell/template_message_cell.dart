@@ -50,9 +50,14 @@ class TemplateMessageCellState extends State<TemplateMessageCell> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BenefitWidget.showImage(widget.templateList[i].image ?? "", width, width * 0.8),
+                    ((widget.templateList[i].image ?? "") != "")
+                        ? BenefitWidget.showImage(widget.templateList[i].image ?? "", width, width * 0.8)
+                        : Container(
+                            padding: const EdgeInsets.only(top: 8),
+                          ),
+                    // BenefitWidget.showImage(widget.templateList[i].image ?? "", width, width * 0.8),
                     Container(
-                      margin: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 16),
+                      margin: const EdgeInsets.all(8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -63,13 +68,16 @@ class TemplateMessageCellState extends State<TemplateMessageCell> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: FontSizeManager().textMSize,
                                   color: ColorManager().primaryColor)),
-                          Text(widget.templateList[i].detail ?? "",
-                              // maxLines: 1,
-                              // overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: FontSizeManager().textMSize,
-                                  color: Colors.black)),
+                          Text(
+                            widget.templateList[i].detail ?? "",
+                            // maxLines: 1,
+                            // overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: FontSizeManager().textMSize,
+                              color: Colors.black,
+                            ),
+                          ),
                           Container(
                               margin: const EdgeInsets.only(top: 16),
                               child: choiceView(widget.templateList[i].choice ?? []))

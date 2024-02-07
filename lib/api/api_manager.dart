@@ -57,8 +57,8 @@ class ApiManager {
         return jsonBody;
       } else {
         debugPrint("Error : Status ${response.statusCode} ");
-        debugPrint("body : ${body}");
-        debugPrint("responseBody : ${responseBody}");
+        debugPrint("body : $body");
+        debugPrint("responseBody : $responseBody");
         var jsonBody = json.decode(utf8.decode(response.bodyBytes));
         return jsonBody;
       }
