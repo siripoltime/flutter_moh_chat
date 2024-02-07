@@ -271,72 +271,66 @@ class ChatMessagePageState extends State<ChatMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      translations: LocaleString(),
-      locale: const Locale('th', 'TH'),
-      theme: AppTheme.theme(context),
-      debugShowCheckedModeBanner: false,
-      home: ContentLayout(
-        title: 'หมอพร้อม',
-        type: LayoutType.light,
-        padding: EdgeInsets.zero,
-        leading: BenefitWidget.imageLeading(context),
-        child: SafeArea(
-          left: false,
-          top: false,
-          right: false,
-          bottom: true,
-          child: Column(
-            children: [
-              Expanded(
-                child: Stack(
-                  children: [
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 400),
-                      child: isLoadData
-                          ? _shimmer(double.infinity)
-                          : GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  showMediaIcon = true;
-                                  _focusNode.unfocus();
-                                });
-                              },
-                              child: Container(
-                                child: buildListMessage(),
-                              ),
+    return ContentLayout(
+      title: 'หมอพร้อม',
+      type: LayoutType.light,
+      padding: EdgeInsets.zero,
+      leading: BenefitWidget.imageLeading(context),
+      child: SafeArea(
+        left: false,
+        top: false,
+        right: false,
+        bottom: true,
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 400),
+                    child: isLoadData
+                        ? _shimmer(double.infinity)
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showMediaIcon = true;
+                                _focusNode.unfocus();
+                              });
+                            },
+                            child: Container(
+                              child: buildListMessage(),
                             ),
-                    ),
-                    Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
-                    Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
-                  ],
-                ),
+                          ),
+                  ),
+                  Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
+                  Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
+                ],
               ),
-              _quickReplyBar(),
-              _tapbar(),
-              // _menuBar(),
-            ],
-          ),
+            ),
+            _quickReplyBar(),
+            _tapbar(),
+            // _menuBar(),
+          ],
         ),
-        // child: Scaffold(
-        //   backgroundColor: ColorManager().backgroundColor,
-        //   appBar: AppBar(
-        //     centerTitle: false,
-        //     titleSpacing: 0.0,
-        //     title: _cardProfile(),
-        //     backgroundColor: ColorManager().primaryColor,
-        //     leading: BackButton(
-        //       color: ColorManager().secondaryColor,
-        //       onPressed: () {
-        //         setState(() {
-        //           Navigator.pop(context);
-        //         });
-        //       },
-        //     ),
-        //   ),
-        //   body:
-        // ),
       ),
+      // child: Scaffold(
+      //   backgroundColor: ColorManager().backgroundColor,
+      //   appBar: AppBar(
+      //     centerTitle: false,
+      //     titleSpacing: 0.0,
+      //     title: _cardProfile(),
+      //     backgroundColor: ColorManager().primaryColor,
+      //     leading: BackButton(
+      //       color: ColorManager().secondaryColor,
+      //       onPressed: () {
+      //         setState(() {
+      //           Navigator.pop(context);
+      //         });
+      //       },
+      //     ),
+      //   ),
+      //   body:
+      // ),
     );
   }
 
