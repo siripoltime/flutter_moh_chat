@@ -7,7 +7,7 @@ class AppTheme {
 
   static theme(BuildContext context) {
     return ThemeData(
-      scaffoldBackgroundColor: AppColor.transparent,
+      scaffoldBackgroundColor: AppColor.primary.shade50,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         systemOverlayStyle: SystemUiOverlayStyle.dark,

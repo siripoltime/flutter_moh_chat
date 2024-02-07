@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mohpromt_chat/api/api_manager.dart';
 import 'package:mohpromt_chat/api/model/chatdata_model.dart';
 import 'package:mohpromt_chat/api/model/message_model.dart';
@@ -10,6 +11,7 @@ import 'package:mohpromt_chat/api/request/message_request.dart';
 import 'package:mohpromt_chat/api/request/selectquickreply_request.dart';
 import 'package:mohpromt_chat/api/response/message_response.dart';
 import 'package:mohpromt_chat/api/service/chat_service.dart';
+import 'package:mohpromt_chat/app.color.dart';
 import 'package:mohpromt_chat/appManager/format_time_notification.dart';
 import 'package:mohpromt_chat/appManager/local_storage_manager.dart';
 import 'package:mohpromt_chat/appManager/locale_string.dart';
@@ -27,6 +29,7 @@ import 'package:mohpromt_chat/page/chat/widget/alert_widget.dart';
 import 'package:mohpromt_chat/page/chat/widget/benefit_widget.dart';
 import 'package:get/get.dart';
 import 'package:mohpromt_chat/style/app.theme.dart';
+import 'package:mohpromt_chat/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../appManager/view_manager.dart';
 import 'package:centrifuge/centrifuge.dart';
@@ -222,10 +225,9 @@ class ChatMessagePageState extends State<ChatMessagePage> {
     }
 
     if (scrollController.offset >= scrollController.position.maxScrollExtent && !loadmore && messageList.isNotEmpty) {
-      if (mounted) {
+      setState(() {
         getAddChatMessages();
-        if (mounted) setState(() {});
-      }
+      });
     }
   }
 
@@ -248,7 +250,6 @@ class ChatMessagePageState extends State<ChatMessagePage> {
     setState(() {
       loadmore = true;
     });
-
     await ChatService.getChatMessage(timestamp).then((value) => {
           setState(() {
             if (value.message == "success") {
@@ -279,47 +280,86 @@ class ChatMessagePageState extends State<ChatMessagePage> {
       theme: AppTheme.theme(context),
       debugShowCheckedModeBanner: false,
       home: ContentLayout(
-          type: LayoutType.light,
-          padding: EdgeInsets.zero,
-          title: 'หมอพร้อม',
-          isTitle: true,
-          child: SafeArea(
-            left: false,
-            top: false,
-            right: false,
-            bottom: true,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 400),
-                        child: isLoadData
-                            ? _shimmer(double.infinity)
-                            : GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showMediaIcon = true;
-                                    _focusNode.unfocus();
-                                  });
-                                },
-                                child: Container(
-                                  child: buildListMessage(),
-                                ),
-                              ),
-                      ),
-                      Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
-                      Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
-                    ],
-                  ),
-                ),
-                _quickReplyBar(),
-                _tapbar(),
-                // _menuBar(),
-              ],
+        title: 'หมอพร้อม',
+        type: LayoutType.light,
+        padding: EdgeInsets.zero,
+        flexibleSpace: Container(
+          padding: EdgeInsets.symmetric(horizontal: Util.maxWidthPadding(context)),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/headcontent.png"),
+              alignment: Alignment.topCenter,
+              fit: BoxFit.fitWidth,
             ),
-          )),
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(5),
+          child: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              color: AppColor.transparent,
+              child: SvgPicture.asset("assets/chevron_left_mint.svg"),
+            ),
+          ),
+        ),
+        child: SafeArea(
+          left: false,
+          top: false,
+          right: false,
+          bottom: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: [
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 400),
+                      child: isLoadData
+                          ? _shimmer(double.infinity)
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  showMediaIcon = true;
+                                  _focusNode.unfocus();
+                                });
+                              },
+                              child: Container(
+                                child: buildListMessage(),
+                              ),
+                            ),
+                    ),
+                    Container(alignment: Alignment.topCenter, child: _timeMessageChat()),
+                    Container(alignment: Alignment.bottomCenter, child: _bottomScrollDown()),
+                  ],
+                ),
+              ),
+              _quickReplyBar(),
+              _tapbar(),
+              // _menuBar(),
+            ],
+          ),
+        ),
+        // child: Scaffold(
+        //   backgroundColor: ColorManager().backgroundColor,
+        //   appBar: AppBar(
+        //     centerTitle: false,
+        //     titleSpacing: 0.0,
+        //     title: _cardProfile(),
+        //     backgroundColor: ColorManager().primaryColor,
+        //     leading: BackButton(
+        //       color: ColorManager().secondaryColor,
+        //       onPressed: () {
+        //         setState(() {
+        //           Navigator.pop(context);
+        //         });
+        //       },
+        //     ),
+        //   ),
+        //   body:
+        // ),
+      ),
     );
   }
 
@@ -546,56 +586,50 @@ class ChatMessagePageState extends State<ChatMessagePage> {
   }
 
   Widget buildListMessage() {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      ),
-      child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: messageList.length,
-          shrinkWrap: true,
-          reverse: true,
-          controller: scrollController,
-          itemBuilder: (context, index) {
-            indexTopWidget = index;
-            bool isStackMessage = false;
-            bool isMe = widget.chatData.userId == messageList[index].sender;
-            if (!isMe) {
-              if (index < messageList.length - 1) {
-                if ((messageList[index].sender == messageList[index + 1].sender) &&
-                    messageList[index + 1].messageType != "unsend" &&
-                    messageList[index + 1].messageType != "info") {
-                  if (TimeExtension.isTimeToMinute(
-                      messageList[index].createdAt ?? "", messageList[index + 1].createdAt ?? "", locale)) {
-                    isStackMessage = true;
-                  }
+    return ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: messageList.length,
+        shrinkWrap: true,
+        reverse: true,
+        controller: scrollController,
+        itemBuilder: (context, index) {
+          indexTopWidget = index;
+          bool isStackMessage = false;
+          bool isMe = widget.chatData.userId == messageList[index].sender;
+          if (!isMe) {
+            if (index < messageList.length - 1) {
+              if ((messageList[index].sender == messageList[index + 1].sender) &&
+                  messageList[index + 1].messageType != "unsend" &&
+                  messageList[index + 1].messageType != "info") {
+                if (TimeExtension.isTimeToMinute(
+                    messageList[index].createdAt ?? "", messageList[index + 1].createdAt ?? "", locale)) {
+                  isStackMessage = true;
                 }
               }
             }
+          }
 
-            return Column(
-              children: [
-                Visibility(
-                    visible: messageList.length == index + 1,
-                    child: loadmore
-                        ? Container(
-                            height: 70,
-                            alignment: Alignment.center,
-                            child: Container(
-                                padding: const EdgeInsets.all(16), child: BenefitWidget.baseLoadingAnimation()),
-                          )
-                        : Container(height: 40)),
-                timeToDayCell(index, messageList),
-                Row(
-                  children: [
-                    Expanded(child: viewMessageCell(messageList, messageList[index], isStackMessage, index)),
-                  ],
-                )
-              ],
-            );
-          }),
-    );
+          return Column(
+            children: [
+              Visibility(
+                  visible: messageList.length == index + 1,
+                  child: loadmore
+                      ? Container(
+                          height: 70,
+                          alignment: Alignment.center,
+                          child:
+                              Container(padding: const EdgeInsets.all(16), child: BenefitWidget.baseLoadingAnimation()),
+                        )
+                      : Container(height: 40)),
+              timeToDayCell(index, messageList),
+              Row(
+                children: [
+                  Expanded(child: viewMessageCell(messageList, messageList[index], isStackMessage, index)),
+                ],
+              )
+            ],
+          );
+        });
   }
 
   Widget timeToDayCell(int index, List<MessageModel> messageListData) {
