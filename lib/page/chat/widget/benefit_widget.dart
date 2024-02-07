@@ -51,7 +51,7 @@ extension BenefitWidget on Widget {
           padding: const EdgeInsets.all(5),
           color: AppColor.transparent,
           // child: SvgPicture.asset("assets/chevron_left_mint.svg"),
-          child: Image.asset('assets/logo_light.png'),
+          child: Image.asset('assets/logo_light.png',width: 50, height: 50),
         ),
       ),
     );
