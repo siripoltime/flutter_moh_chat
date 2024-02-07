@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:mohpromt_chat/app.color.dart';
 import 'package:mohpromt_chat/page/chat/widget/loadwidget.dart';
+import 'package:mohpromt_chat/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 //BenefitWidget.imageProfile
@@ -21,6 +24,33 @@ extension BenefitWidget on Widget {
         backgroundColor: Colors.white,
         child: ClipOval(
           child: Image.asset('assets/logo_light.png', width: size, height: size),
+        ),
+      ),
+    );
+  }
+
+  static Widget imageFlexibleSpace(context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: Util.maxWidthPadding(context)),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/headcontent.png"),
+          alignment: Alignment.topCenter,
+          fit: BoxFit.fitWidth,
+        ),
+      ),
+    );
+  }
+
+  static Widget imageLeading(context) {
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          color: AppColor.transparent,
+          child: SvgPicture.asset("assets/chevron_left_mint.svg"),
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mohpromt_chat/api/api_manager.dart';
 import 'package:mohpromt_chat/api/model/chatdata_model.dart';
 import 'package:mohpromt_chat/api/model/message_model.dart';
@@ -11,7 +10,6 @@ import 'package:mohpromt_chat/api/request/message_request.dart';
 import 'package:mohpromt_chat/api/request/selectquickreply_request.dart';
 import 'package:mohpromt_chat/api/response/message_response.dart';
 import 'package:mohpromt_chat/api/service/chat_service.dart';
-import 'package:mohpromt_chat/app.color.dart';
 import 'package:mohpromt_chat/appManager/format_time_notification.dart';
 import 'package:mohpromt_chat/appManager/local_storage_manager.dart';
 import 'package:mohpromt_chat/appManager/locale_string.dart';
@@ -29,7 +27,6 @@ import 'package:mohpromt_chat/page/chat/widget/alert_widget.dart';
 import 'package:mohpromt_chat/page/chat/widget/benefit_widget.dart';
 import 'package:get/get.dart';
 import 'package:mohpromt_chat/style/app.theme.dart';
-import 'package:mohpromt_chat/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../appManager/view_manager.dart';
 import 'package:centrifuge/centrifuge.dart';
@@ -283,27 +280,7 @@ class ChatMessagePageState extends State<ChatMessagePage> {
         title: 'หมอพร้อม',
         type: LayoutType.light,
         padding: EdgeInsets.zero,
-        flexibleSpace: Container(
-          padding: EdgeInsets.symmetric(horizontal: Util.maxWidthPadding(context)),
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/headcontent.png"),
-              alignment: Alignment.topCenter,
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.all(5),
-          child: GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              color: AppColor.transparent,
-              child: SvgPicture.asset("assets/chevron_left_mint.svg"),
-            ),
-          ),
-        ),
+        leading: BenefitWidget.imageLeading(context),
         child: SafeArea(
           left: false,
           top: false,
