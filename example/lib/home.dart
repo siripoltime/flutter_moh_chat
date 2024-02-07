@@ -17,13 +17,7 @@ class _HomePageState extends State<HomePage> {
   //
 
   ChatTokenRequest request = ChatTokenRequest(
-    botId: "315fdae7-9907-486d-bc92-a3bc48572958",
-    cid: "onechat-01",
-    firstname: "วันแชท",
-    lastname: "หนึ่ง",
-    masterToken:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOiJwcm8iLCJzZXJ2aWNlIjoiTW9waCJ9.jq1ha3f2PrB6nSSczHpul7yYpMLKpXsW3ln-PB8nSCQ",
-    urlApi: "https://onechat-moph.inet.co.th",
+    //
   );
 
   //เข้าหน้าแชท
