@@ -34,7 +34,7 @@ extension BenefitWidget on Widget {
       padding: EdgeInsets.symmetric(horizontal: Util.maxWidthPadding(context)),
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/headcontent.png"),
+          image: AssetImage("assets/element/head=content.png"),
           alignment: Alignment.topCenter,
           fit: BoxFit.fitWidth,
         ),
@@ -50,7 +50,7 @@ extension BenefitWidget on Widget {
         child: Container(
           padding: const EdgeInsets.all(5),
           color: AppColor.transparent,
-          child: SvgPicture.asset("assets/chevron_left_mint.svg"),
+          child: SvgPicture.asset("assets/icon/chevron_left_mint.svg"),
         ),
       ),
     );
