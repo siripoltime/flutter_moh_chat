@@ -116,7 +116,7 @@ class _WebViewState extends State<WebView> {
           Platform.isAndroid
               ? InAppWebView(
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(widget.urlString),
+                    url: WebUri.uri(Uri.parse(widget.urlString)),
                   ),
                   initialOptions: InAppWebViewGroupOptions(
                     crossPlatform: InAppWebViewOptions(
@@ -145,7 +145,8 @@ class _WebViewState extends State<WebView> {
               : InAppWebView(
                   key: webViewKey,
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(widget.urlString),
+                    url: WebUri.uri(Uri.parse(widget.urlString)),
+                    // url: Uri.parse(widget.urlString),
                   ),
                   initialOptions: initialOptions,
                   gestureRecognizers: gestureRecognizers,
