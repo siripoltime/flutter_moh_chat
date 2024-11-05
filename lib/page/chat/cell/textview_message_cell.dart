@@ -51,7 +51,8 @@ class TextViewMessageCellState extends State<TextViewMessageCell> {
             _launchURL(url.value);
           } else if (url.type == StringContainsElementType.phoneNumber) {
             String phoneNumber = url.value.replaceAll(' ', '');
-            launch("tel://${phoneNumber}").catchError((e) {
+            // ignore: body_might_complete_normally_catch_error
+            launch("tel://$phoneNumber").catchError((e) {
               //
             });
           }
